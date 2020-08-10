@@ -19,3 +19,9 @@ func Backend() interface{} {
 	// Currently our plugin does not yet have a controller to reference, return nil
 	return nil
 }
+
+// Close will close the plugin
+func Close() (err error) {
+	// Currently our plugin does not yet have a controller to close, return nil
+	return nil
+}
