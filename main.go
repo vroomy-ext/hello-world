@@ -38,5 +38,5 @@ func Backend() interface{} {
 // Close will close the plugin
 func Close() (err error) {
 	// Currently our plugin does not yet have a controller to close, return nil
-	return nil
+	return hw.Close()
 }
