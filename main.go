@@ -31,8 +31,8 @@ func Load(p common.Plugins) (err error) {
 
 // Backend returns the underlying backend to the plugin
 func Backend() interface{} {
-	// Currently our plugin does not yet have a controller to reference, return nil
-	return nil
+	// Return hello world controller
+	return hw
 }
 
 // Close will close the plugin
