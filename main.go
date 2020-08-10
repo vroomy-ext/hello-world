@@ -13,3 +13,9 @@ func Load(p common.Plugins) (err error) {
 	// Referencing other plugins occurs here
 	return
 }
+
+// Backend returns the underlying backend to the plugin
+func Backend() interface{} {
+	// Currently our plugin does not yet have a controller to reference, return nil
+	return nil
+}
