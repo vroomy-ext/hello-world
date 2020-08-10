@@ -1,10 +1,25 @@
 package main
 
-import "github.com/vroomy/common"
+import (
+	"fmt"
+
+	helloworld "github.com/gdbu/hello-world"
+	"github.com/vroomy/common"
+)
+
+var hw *helloworld.Controller
 
 // Init will be called by vroomy on initialization
 func Init(env map[string]string) (err error) {
-	// Plugin initialization occurs here
+	// Get the data directory from the enviroment
+	dataDir := env["dataDir"]
+
+	// Initialize hello world controller
+	if hw, err = helloworld.New(dataDir); err != nil {
+		err = fmt.Errorf("error initializing hello world controller: %v", err)
+		return
+	}
+
 	return
 }
 
