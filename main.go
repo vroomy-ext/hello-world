@@ -102,6 +102,33 @@ func GetByUser(ctx *httpserve.Context) (res httpserve.Response) {
 	return httpserve.NewJSONResponse(200, es)
 }
 
+// Update is the handler for editing an existing Entry
+func Update(ctx *httpserve.Context) (res httpserve.Response) {
+	var (
+		e   helloworld.Entry
+		err error
+	)
+
+	// Parse request body as JSON
+	if err = ctx.BindJSON(&e); err != nil {
+		// Error parsing request body, return error
+		err = fmt.Errorf("error parsing request body: %v", err)
+		return httpserve.NewJSONResponse(400, err)
+	}
+
+	entryID := ctx.Param("entryID")
+
+	// Attempt to update Entry by ID using parsed Entry
+	if err = hw.Update(entryID, e); err != nil {
+		// Error updating Entry, return error
+		err = fmt.Errorf("error updating entry: %v", err)
+		return httpserve.NewJSONResponse(400, err)
+	}
+
+	// Entry was successfully inserted, return newly created ID
+	return httpserve.NewNoContentResponse()
+}
+
 // Close will close the plugin
 func Close() (err error) {
 	// Currently our plugin does not yet have a controller to close, return nil
