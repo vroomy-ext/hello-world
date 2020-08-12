@@ -125,7 +125,7 @@ func Update(ctx *httpserve.Context) (res httpserve.Response) {
 		return httpserve.NewJSONResponse(400, err)
 	}
 
-	// Entry was successfully inserted, return newly created ID
+	// Entry was successfully updated, no content response
 	return httpserve.NewNoContentResponse()
 }
 
