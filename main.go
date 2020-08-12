@@ -129,6 +129,22 @@ func Update(ctx *httpserve.Context) (res httpserve.Response) {
 	return httpserve.NewNoContentResponse()
 }
 
+// Delete is the handler for removing an existing Entry
+func Delete(ctx *httpserve.Context) (res httpserve.Response) {
+	var err error
+	entryID := ctx.Param("entryID")
+
+	// Attempt to remove Entry by ID
+	if err = hw.Delete(entryID); err != nil {
+		// Error removing Entry, return error
+		err = fmt.Errorf("error updating entry: %v", err)
+		return httpserve.NewJSONResponse(400, err)
+	}
+
+	// Entry was successfully removed
+	return httpserve.NewNoContentResponse()
+}
+
 // Close will close the plugin
 func Close() (err error) {
 	// Currently our plugin does not yet have a controller to close, return nil
