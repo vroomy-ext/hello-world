@@ -62,6 +62,26 @@ func New(ctx *httpserve.Context) (res httpserve.Response) {
 	return httpserve.NewJSONResponse(200, createdID)
 }
 
+// Get is the handler for getting an Entry by ID
+func Get(ctx *httpserve.Context) (res httpserve.Response) {
+	var (
+		e   *helloworld.Entry
+		err error
+	)
+
+	entryID := ctx.Param("entryID")
+
+	// Attempt to get Entry by ID provided in the URL params
+	if e, err = hw.Get(entryID); err != nil {
+		// Error getting Entry by ID, return error
+		err = fmt.Errorf("error getting entry: %v", err)
+		return httpserve.NewJSONResponse(400, err)
+	}
+
+	// Entry was successfully retrieved, return Entry
+	return httpserve.NewJSONResponse(200, e)
+}
+
 // Close will close the plugin
 func Close() (err error) {
 	// Currently our plugin does not yet have a controller to close, return nil
