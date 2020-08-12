@@ -82,6 +82,26 @@ func Get(ctx *httpserve.Context) (res httpserve.Response) {
 	return httpserve.NewJSONResponse(200, e)
 }
 
+// GetByUser is the handler for getting an Entry by user ID
+func GetByUser(ctx *httpserve.Context) (res httpserve.Response) {
+	var (
+		es  []*helloworld.Entry
+		err error
+	)
+
+	userID := ctx.Param("userID")
+
+	// Attempt to get Entries by User ID provided in the URL params
+	if es, err = hw.GetByUser(userID); err != nil {
+		// Error getting Entries by User ID, return error
+		err = fmt.Errorf("error getting entry: %v", err)
+		return httpserve.NewJSONResponse(400, err)
+	}
+
+	// Entries were successfully retrieved, return Entries
+	return httpserve.NewJSONResponse(200, es)
+}
+
 // Close will close the plugin
 func Close() (err error) {
 	// Currently our plugin does not yet have a controller to close, return nil
